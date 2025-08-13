@@ -33,6 +33,11 @@
 \newcommand{\colr}[1]{\textcolor{bonnred}{#1}}
 \newcommand{\colg}[1]{\textcolor{bonngrey}{#1}}
 
+%============Refs==========
+\newcommand*{\siref}[1]{Supplemental Material, {#1}}
+\newcommand*{\figref}[1]{Fig.~\ref{#1}}
+\newcommand*{\tabref}[1]{Tab.~\ref{#1}}
+\newcommand*{\eqeqref}[1]{Eq.~\ref{#1}}
 
 %==========Programms=======
 \newcommand*{\orca}{{\fontfamily{pag}\selectfont ORCA}}
@@ -42,26 +47,26 @@
 \newcommand{\xtb}{\texttt{xTB}}
 \newcommand{\tblite}{\texttt{tblite}}
 
-
 %============Misc==========
 \newcommand*{\etal}{\textit{et al.}}
 \newcommand*{\ie}{\textit{i.e.}}
 \newcommand*{\eg}{\textit{e.g.}}
 
-
 %============Units==========
-
 \DeclareSIUnit[number-unit-product = {\,}]{\calorie}{cal}
+\DeclareSIUnit[number-unit-product = {\,}]{\atm}{atm}
 \sisetup{per-mode = power}
 \newcommand{\kcalpmol}{\unit{\kilo\calorie\per\mol}}
 \newcommand{\kjpmol}{\unit{\kilo\joule\per\mol}}
+\newcommand{\logunits}{\unit{log\,units}}
 
 %============Quantities==========
 \newcommand*{\pka}{p\textit{K}\textsubscript{a}}
-\newcommand*{\logkow}{log~\textit{K}\textsubscript{ow}}
-\newcommand*{\logkwa}{log~\textit{K}\textsubscript{wa}}
-\newcommand*{\logpl}{log~\textit{P}\textsubscript{L}}
-\newcommand*{\dgsolv}{$\delta$\textit{G}\textsubscript{solv}}
+\newcommand*{\logkow}{log\,\textit{K}\textsubscript{o/w}}
+\newcommand*{\logkaw}{log\,\textit{K}\textsubscript{a/w}}
+\newcommand*{\logkab}{log\,\textit{K}\textsubscript{$\alpha/\beta$}}
+\newcommand*{\logpl}{log\,\textit{P}\textsubscript{L}}
+\newcommand*{\dgsolv}{$\Delta_\mathrm{solv}G$}
 
 %=========QC-Methods========
 %\newcommand*{\rsc}{r\textsuperscript{2}SCAN-3c}
@@ -125,6 +130,7 @@
 % Declare Methods
 %-------------------------------------------------------
 \DeclareMethods{rsc,r2scan3c,r2scan-3c}{r\textsuperscript{2}SCAN-3c}
+\DeclareMethods{wb97mv,wb97m-v}{$\omega$B97M-V}
 \DeclareMethods{wr2scand4,wr2scan-d4,wr2scand4}{$\omega$r\textsuperscript{2}SCAN-D4}
 \DeclareMethods{wpr2scan50d4,wpr2scan50-d4,wpr2scan50d4}{$\omega$Pr\textsuperscript{2}SCAN50-D4}
 
