@@ -7,7 +7,7 @@ This is a Latex package to ensure a consistent usage of colors and writings of Q
 Just put `\usepackage{quantum-chemistry-bonn}` in the preamble of your LaTeX document and all commands are available.
 
 ## Authors
-This package has been developed and is maintained by Christian Selzer (@chselz) and Lukas Wittmann (@lukaswittmann).
+This package has been developed and is maintained by Christian Selzer ([@chselz](https://github.com/chselz)) and Lukas Wittmann ([@lukaswittmann](https://github.com/lukaswittmann)).
 
 ## Contributing
 
