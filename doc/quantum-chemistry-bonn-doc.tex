@@ -3,9 +3,9 @@
 
 
 %===============================================================================
-% quantum-chemistry-bonn-doc.tex  v0.1  2025/06/04
+% quantum-chemistry-bonn-doc.tex  v0.2  2026/03/12
 % Documentation for the quantum-chemistry-bonn LaTeX package
-% Copyright (c) 2025 Christian Selzer
+% Copyright (c) 2025-2026 Christian Selzer
 %===============================================================================
 
 \documentclass[a4paper,12pt]{article}
@@ -18,21 +18,22 @@
     citecolor=bonnblue,
     urlcolor=bonnblue
 }
+\emergencystretch=1.5em
 
 % If the package is installed via CTAN or in your local TEXMF tree, use:
 % \usepackage{quantum-chemistry-bonn}
 % Otherwise, to compile this documentation, place quantum-chemistry-bonn.sty in the same directory and uncomment:
-\input{../src/quantum-chemistry-bonn.sty}
+\input{../tex/quantum-chemistry-bonn.sty}
 
 \title{\texttt{quantum-chemistry-bonn} Package Documentation}
 \author{Christian Selzer \& Lukas Wittmann}
-\date{2025/06/04}
+\date{2026/03/12}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This document describes the \texttt{quantum-chemistry-bonn} package (version 0.1, dated 2025/06/03), developed to consolidate common quantum-chemistry program names, colorful branding elements, and frequently used abbreviations into a single, centrally maintained style file. With \texttt{quantum-chemistry-bonn}, authors can ensure uniform formatting for program names, method labels, color highlights, and other notations across all QC-related manuscripts. 
+This document describes the \texttt{quantum-chemistry-bonn} package (version 0.2, dated 2026/03/12), developed to consolidate common quantum-chemistry program names, colorful branding elements, and frequently used abbreviations into a single, centrally maintained style file. With \texttt{quantum-chemistry-bonn}, authors can ensure uniform formatting for program names, method labels, color highlights, and other notations across all QC-related manuscripts. 
 \end{abstract}
 
 \tableofcontents
@@ -46,10 +47,12 @@ The \texttt{quantum-chemistry-bonn} package was created to simplify and standard
 Key features:
 \begin{itemize}
   \item \textbf{Program Macros:} Uniform fonts (small caps, typewriter) for popular QC codes (\orca, \censo, \draco, \crest, \xtb, \tblite).
-  \item \textbf{Color Palette:} Predefined RGB colors (\texttt{bonnblue}, \texttt{bonnred}, \texttt{bonnyellow}, \texttt{bonngrey}/\texttt{bonngray}, \texttt{bonngreen}, etc.) aligned with University of Bonn branding.
-  \item \textbf{Abbreviation Macros:} Convenient commands for \etal, \ie, \eg, physical chemistry quantities (\pka, \dgsolv, \kcalpmol).
-  \item \textbf{QC-Method Macro:} Shorthands for several quantum mechanical methods such as \method{r2scan3c} .
-  \item \textbf{Minimal Dependencies:} Only \texttt{xcolor} and \texttt{siunitx} are required. 
+  \item \textbf{Color Palette:} Predefined RGB colors (e.g., \texttt{bonnblue}, \texttt{bonnred}, \texttt{bonnyellow}, \texttt{bonngreen}) aligned with University of Bonn branding.
+  \item \textbf{Reference Shortcuts:} Quick macros for cross-referencing (\verb|\figref|, \verb|\tabref|, \verb|\eqeqref|, \verb|\siref|).
+  \item \textbf{Abbreviation Macros:} Convenient commands for \etal, \ie, \eg, and physical chemistry quantities (\pka, \dgsolv, \kcalpmol, etc.).
+  \item \textbf{QC-Method Macro:} Shorthands for several quantum mechanical methods such as \method{r2scan3c} and \method{wb97m-v}.
+  \item \textbf{Acronym Definitions:} Over 80 predefined acronyms for common QC terminology (e.g., \ac{dft}, \ac{bsse}, \ac{cc}) via the \texttt{acronym} package.
+  \item \textbf{Dependencies:} \texttt{xcolor}, \texttt{siunitx}, \texttt{expl3}/\texttt{xparse}, and \texttt{acronym}.
 \end{itemize}
 
 %------------------------------------------------------------------------------
@@ -64,7 +67,9 @@ Key features:
 \end{verbatim}
 
 \subsection{Manual (Unpacked) Usage}
-If you have not installed the package system-wide, simply place the \texttt{quantum-chemistry-bonn.sty} file in the same folder as your \texttt{.tex} document. Then, in the preamble, either:
+If you have not installed the package system-wide, simply place
+\texttt{quantum-\hspace{0pt}chemistry-\hspace{0pt}bonn.sty} in the same folder as your
+\texttt{.tex} document. Then, in the preamble:
 \begin{verbatim}
 % If quantum-chemistry-bonn.sty is in the same directory:
 \input{quantum-chemistry-bonn.sty}
@@ -73,7 +78,7 @@ If you have not installed the package system-wide, simply place the \texttt{quan
 %------------------------------------------------------------------------------
 % \section{Package Options}
 % \label{sec:options}
-% The current version (0.1) of \texttt{quantum-chemistry-bonn} does not provide user-settable options. All macros and colors are preconfigured. Future versions may introduce options to toggle certain definitions or adjust color names.
+% The current version (0.2) of \texttt{quantum-chemistry-bonn} does not provide user-settable options. All macros and colors are preconfigured. Future versions may introduce options to toggle certain definitions or adjust color names.
 
 %------------------------------------------------------------------------------
 \section{Color Definitions}
@@ -81,7 +86,7 @@ If you have not installed the package system-wide, simply place the \texttt{quan
 \texttt{quantum-chemistry-bonn} defines a palette of RGB colors aligned with the University of Bonn branding, plus a few additional utility colors. All color names can be passed to \verb|\textcolor{<name>}{...}| or used in other color-aware commands.
 
 \bigskip
-\begin{tabular}{@{}llp{8cm}@{}}
+\begin{tabular}{@{}llp{6.5cm}@{}}
 \textbf{Color Name}     & \textbf{RGB}        & \textbf{Description} \\
 \midrule
 \texttt{bonnblue}       & (007, 078, 159)        & “Bonn blue” primary corporate color. \\
@@ -129,12 +134,43 @@ and a \coly{yellow phrase}.
 \end{verbatim}
 
 %------------------------------------------------------------------------------
+\section{Reference Shortcut Macros}
+\label{sec:refs}
+\texttt{quantum-chemistry-bonn} provides four convenience macros for common cross-reference patterns:
+
+\begin{description}
+  \item[\texttt{\textbackslash figref\{<label>\}}] – Renders ``Fig.~\verb|\ref{<label>}|''.\\
+    \textit{Usage:}
+    \begin{verbatim}
+    As shown in \figref{fig:energy}, the barrier is small.
+    \end{verbatim}
+
+  \item[\texttt{\textbackslash tabref\{<label>\}}] – Renders ``Tab.~\verb|\ref{<label>}|''.\\
+    \textit{Usage:}
+    \begin{verbatim}
+    The full data is listed in \tabref{tab:results}.
+    \end{verbatim}
+
+  \item[\texttt{\textbackslash eqeqref\{<label>\}}] – Renders ``Eq.~\verb|\ref{<label>}|''.\\
+    \textit{Usage:}
+    \begin{verbatim}
+    Substituting into \eqeqref{eq:schroedinger} gives ...
+    \end{verbatim}
+
+  \item[\texttt{\textbackslash siref\{<text>\}}] – Renders ``Supplemental Material, \textit{<text>}''.\\
+    \textit{Usage:}
+    \begin{verbatim}
+    Further details are given in \siref{Table S1}.
+    \end{verbatim}
+\end{description}
+
+%------------------------------------------------------------------------------
 \section{Program Name Macros}
 \label{sec:programs}
 Quantum-chemistry program names often involve unconventional capitalization, spacing, or font choices. \texttt{quantum-chemistry-bonn} provides dedicated macros to ensure consistent formatting. All program-related commands use \verb|\newcommand*| and select an appropriate font shape:
 
 \begin{description}
-  \item[\texttt{\textbackslash orca}]  – Renders “ORCA” in a monospaced (typewriter) font via \verb|\fontfamily{pag}|.\\
+  \item[\texttt{\textbackslash orca}]  – Renders ``ORCA'' using the AvantGarde font family.\\
     \textit{Usage:} 
     \begin{verbatim}
     Calculations were performed with \orca\.
@@ -149,7 +185,7 @@ Quantum-chemistry program names often involve unconventional capitalization, spa
     \item[\texttt{\textbackslash draco}] – Renders “Draco” in small caps.\\
     \textit{Usage:}
     \begin{verbatim}
-    The new module in \draco\ yields improved solvation free energies.
+    \draco\ yields improved solvation energies.
     \end{verbatim}
 
     \item[\texttt{\textbackslash crest}] – Renders “CREST” in small caps.\\
@@ -194,7 +230,7 @@ In addition to program names, \texttt{quantum-chemistry-bonn} defines several co
     \item[\texttt{\textbackslash eg}]   – Renders “\textit{e.g.}”. \\
     \textit{Usage:} 
     \begin{verbatim}
-    Many packages (e.g., \orca, \xtb) can compute dispersion.
+    Many packages (\orca, \xtb) compute dispersion.
     \end{verbatim}
 
     \item[\texttt{\textbackslash pka}]   – Renders “p\textit{K}\textsubscript{a}” with a proper subscript “$a$”. \\
@@ -203,16 +239,52 @@ In addition to program names, \texttt{quantum-chemistry-bonn} defines several co
     The calculated \pka\ of the acid is 4.8.
     \end{verbatim}
 
-    \item[\texttt{\textbackslash dgsolv}] – Renders “$\delta$\textit{G}\textsubscript{solv}” with the delta and subscript “solv”. \\
+    \item[\texttt{\textbackslash dgsolv}] – Renders ``$\Delta_\mathrm{solv}G$'' (solvation free energy). \\
     \textit{Usage:} 
     \begin{verbatim}
-    The solvation free energy (\dgsolv) was computed using SMD.
+    The \dgsolv\ was computed with SMD.
     \end{verbatim}
 
-    \item[\texttt{\textbackslash kcalmol}] – Renders “kcal$\cdot$mol$^{-1}$ ” with a trailing thin space to separate it from the next word. \\
+    \item[\texttt{\textbackslash kcalpmol}] – Renders ``\kcalpmol'' using \texttt{siunitx}. \\
     \textit{Usage:} 
     \begin{verbatim}
-    The reaction barrier is 15.2 \kcalmol.
+    The reaction barrier is 15.2 \kcalpmol.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash kjpmol}] – Renders ``\kjpmol'' using \texttt{siunitx}. \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The binding energy is 63.6 \kjpmol.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash logunits}] – Renders ``\logunits'' using \texttt{siunitx}. \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The RMSE amounts to 0.4 \logunits.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash logkow}] – Renders ``\logkow'' (octanol/water partition coefficient). \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The \logkow\ value indicates moderate lipophilicity.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash logkaw}] – Renders ``\logkaw'' (air/water partition coefficient). \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The \logkaw\ was estimated from SMD calculations.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash logkab}] – Renders ``\logkab'' ($\alpha/\beta$ partition coefficient). \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The \logkab\ describes the phase partitioning.
+    \end{verbatim}
+
+    \item[\texttt{\textbackslash logpl}] – Renders ``\logpl'' (liquid-phase vapor pressure). \\
+    \textit{Usage:} 
+    \begin{verbatim}
+    The \logpl\ was obtained experimentally.
     \end{verbatim}
 \end{description}
 
@@ -222,7 +294,7 @@ In addition to program names, \texttt{quantum-chemistry-bonn} defines several co
 \texttt{quantum-chemistry-bonn} includes  dedicated macros for popular quantum mechanical methods:
 
 \begin{description}
-    \item[\texttt{\textbackslash method\{<method>\}}] – Renders \texttt{<method>} properly e.g. “r\textsuperscript{2}SCAN-3c” with proper superscript formatting for the “2”.\\
+    \item[\texttt{\textbackslash method\{<method>\}}] – Renders \texttt{<method>} using a case-insensitive lookup.  If the method key is recognized, the properly formatted version is returned; otherwise the raw input is echoed back.\\
     \textit{Usage:}
     \begin{verbatim}
     Single-point energies were obtained at the
@@ -230,10 +302,92 @@ In addition to program names, \texttt{quantum-chemistry-bonn} defines several co
     \end{verbatim}
 \end{description}
 
+\noindent Currently declared methods and their accepted aliases:
+
+\bigskip
+\begin{tabular}{@{}lll@{}}
+\textbf{Rendered Output} & \textbf{Accepted Keys (any case)} \\
+\midrule
+r\textsuperscript{2}SCAN-3c & \texttt{rsc}, \texttt{r2scan3c}, \texttt{r2scan-3c} \\
+$\omega$B97M-V & \texttt{wb97mv}, \texttt{wb97m-v} \\
+$\omega$r\textsuperscript{2}SCAN-D4 & \texttt{wr2scand4}, \texttt{wr2scan-d4} \\
+$\omega$Pr\textsuperscript{2}SCAN50-D4 & \texttt{wpr2scan50d4}, \texttt{wpr2scan50-d4} \\
+\end{tabular}
+
+\bigskip
+\noindent Users can register additional methods in their preamble:
+\begin{itemize}
+  \item \verb|\DeclareMethod{<key>}{<formatted>}|
+  \item \verb|\DeclareMethods{<key1>,<key2>,...}{<formatted>}|
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\section{Acronym Definitions}
+\label{sec:acronyms}
+Starting with version~0.2, \texttt{quantum-chemistry-bonn} ships with over 80 predefined acronyms for quantum-chemistry terminology, powered by the \texttt{acronym} package (loaded with the \texttt{[nolist]} option). On first use, \verb|\ac{<key>}| expands to the full form followed by the abbreviation in parentheses; subsequent uses print only the abbreviation.
+
+\medskip
+\noindent\textbf{Key commands} (provided by the \texttt{acronym} package):
+\begin{description}
+  \item[\texttt{\textbackslash ac\{<key>\}}]  – Standard use: full form on first occurrence, short form thereafter.
+  \item[\texttt{\textbackslash acf\{<key>\}}] – Force full form (long + short).
+  \item[\texttt{\textbackslash acs\{<key>\}}] – Force short form only.
+  \item[\texttt{\textbackslash acl\{<key>\}}] – Force long form only.
+  \item[\texttt{\textbackslash acp\{<key>\}}] – Plural version.
+  \item[\texttt{\textbackslash acresetall}]   – Reset all acronyms to ``first use'' state.
+\end{description}
+
+\medskip
+\noindent\textbf{Example:}
+\begin{verbatim}
+The \ac{dft} calculations were done ... % first use
+Further \ac{dft} results confirm ...    % short form
+The \ac{bsse} was corrected via \ac{cp}.
+\end{verbatim}
+
+\medskip
+\noindent\textbf{Selected predefined acronyms} (excerpt):
+
+\bigskip
+\begin{tabular}{@{}llp{7.5cm}@{}}
+\textbf{Key} & \textbf{Short} & \textbf{Long Form} \\
+\midrule
+\texttt{dft}   & DFT     & density functional theory \\
+\texttt{dftb}  & DFTB    & density functional tight-binding \\
+\texttt{wft}   & WFT     & wave function theory \\
+\texttt{hf}    & HF      & Hartree-Fock \\
+\texttt{cc}    & CC      & coupled cluster \\
+\texttt{mp2}   & MP2     & second-order M{\o}ller-Plesset perturbation theory \\
+\texttt{dfa}   & DFA     & density functional approximation \\
+\texttt{bsse}  & BSSE    & basis set superposition error \\
+\texttt{bsie}  & BSIE    & basis set incompleteness error \\
+\texttt{scf}   & SCF     & self-consistent field \\
+\texttt{ri}    & RI      & resolution of the identity \\
+\texttt{ecp}   & ECP     & effective core potential \\
+\texttt{nci}   & NCI     & non-covalent interaction \\
+\texttt{rmse}  & RMSE    & root mean square error \\
+\texttt{mae}   & MAE     & mean absolute error \\
+\texttt{ml}    & ML      & machine learning \\
+\texttt{pes}   & PES     & potential energy surface \\
+\texttt{nmr}   & NMR     & Nuclear Magnetic Resonance \\
+\texttt{x2c}   & X2C     & exact two-component \\
+\texttt{gga}   & GGA     & generalized gradient approximation \\
+\end{tabular}
+
+\bigskip
+\noindent For the complete list of all predefined acronyms, see the
+source file \texttt{quantum-chemistry-bonn.sty}.
+Users can add custom acronyms in their preamble via:
+\begin{verbatim}
+\acrodef{<key>}[<short>]{<long>}
+\end{verbatim}
+
 %------------------------------------------------------------------------------
 \section{Example Usage}
 \label{sec:example}
-Below is a minimal working example illustrating how to load \texttt{quantum-chemistry-bonn} and use its macros. Copy the following into a file named \texttt{example-quantum-chemistry-bonn.tex} and compile with \LaTeX:
+Below is a minimal working example showing how to load the package
+and use its macros. Copy the following into a file named
+\texttt{example-\hspace{0pt}quantum-\hspace{0pt}chemistry-\hspace{0pt}bonn.tex} and compile with \LaTeX:
 
 \medskip
 \begin{verbatim}
@@ -241,8 +395,8 @@ Below is a minimal working example illustrating how to load \texttt{quantum-chem
 
 % If installed system-wide:
 % \usepackage{quantum-chemistry-bonn}
-% Otherwise, place quantum-chemistry-bonn.sty in src/:
-\input{src/quantum-chemistry-bonn.sty}
+% Otherwise, place quantum-chemistry-bonn.sty in tex/:
+\input{tex/quantum-chemistry-bonn.sty}
 
 \title{Example for \texttt{quantum-chemistry-bonn}}
 \author{Christian Selzer}
@@ -252,31 +406,35 @@ Below is a minimal working example illustrating how to load \texttt{quantum-chem
 \maketitle
 
 \section{Introduction}
-In this document, it is demonstrated how to use abbreviations and colors from \texttt{quantum-chemistry-bonn}.
+In this document, we demonstrate how to use
+the \texttt{quantum-chemistry-bonn} package.
 
 \subsection{Abbreviations}
 Here are a few examples:
 \begin{itemize}
-  \item Calculations were performed with \orca\.
-  \item The best program is \xtb\ for SQM and it has \emph{no} bugs.
-  \item As shown by Smith \etal, the method \rsc\ is accurate.
+  \item Calculations were done with \orca\.
+  \item We used \xtb\ for SQM screening.
+  \item Smith \etal\ found \rsc\ accurate.
 \end{itemize}
 
 \subsection{Colored Elements}
 \begin{itemize}
-    \item Here something is written in \textcolor{bonnblue}{blue}, optionally also via \verb|\colb{}|.
-    \item For comparison something in \textcolor{blue}{normal blue}.
-    \item Highlighted text in \coly{Bonn yellow}.
+  \item Text in \textcolor{bonnblue}{blue},
+    or via \verb|\colb{}|.
+  \item Compare: \textcolor{blue}{normal blue}.
+  \item Highlighted: \coly{Bonn yellow}.
 \end{itemize}
 
 \section{Conclusion}
-The package offers simple abbreviations and colors that are maintained centrally in one file.
+The package offers abbreviations and colors
+maintained centrally in one file.
 
 \end{document}
 \end{verbatim}
 
 \bigskip
-After compilation, the PDF will show all macros in action. Adjust paths as needed (e.g., \texttt{src/quantum-chemistry-bonn.sty} vs.\ \texttt{quantum-chemistry-bonn.sty}).
+After compilation, the PDF will show all macros in action.
+Adjust paths as needed.
 
 %------------------------------------------------------------------------------
 % \section{Summary of Commands}
@@ -315,14 +473,34 @@ After compilation, the PDF will show all macros in action. Adjust paths as neede
 %   \item \verb|\ie|    – \textit{i.e.}
 %   \item \verb|\eg|    – \textit{e.g.}
 %   \item \verb|\pka|   – p\textit{K}\textsubscript{a}
-%   \item \verb|\dgsolv| – $\delta$\textit{G}\textsubscript{solv}
-%   \item \verb|\kcalmol| – kcal$\cdot$mol$^{-1}$\~
+%   \item \verb|\dgsolv| – $\Delta_\mathrm{solv}G$
+%   \item \verb|\kcalpmol| – \kcalpmol
+%   \item \verb|\kjpmol| – \kjpmol
+%   \item \verb|\logunits| – \logunits
+%   \item \verb|\logkow| – \logkow
+%   \item \verb|\logkaw| – \logkaw
+%   \item \verb|\logkab| – \logkab
+%   \item \verb|\logpl| – \logpl
+% \end{itemize}
+
+% \subsection{Reference Shortcuts}
+% \begin{itemize}
+%   \item \verb|\figref{<label>}| – Fig.~\ref{...}
+%   \item \verb|\tabref{<label>}| – Tab.~\ref{...}
+%   \item \verb|\eqeqref{<label>}| – Eq.~\ref{...}
+%   \item \verb|\siref{<text>}| – Supplemental Material, ...
 % \end{itemize}
 
 % \subsection{QC-Method Macro}
 % \begin{itemize}
-%   \item \verb|\rsc| – r\textsuperscript{2}SCAN-3c
+%   \item \verb|\method{<key>}| – Lookup-based rendering of QC methods
+%   \item \verb|\DeclareMethod{<key>}{<formatted>}| – Register single method
+%   \item \verb|\DeclareMethods{<key1>,<key2>,...}{<formatted>}| – Batch register
 % \end{itemize}
+
+% \subsection{Acronyms}
+% Over 80 predefined acronyms via \verb|\ac{<key>}|.
+% See source file for complete list.
 
 %------------------------------------------------------------------------------
 \section{License and Credits}
@@ -331,7 +509,7 @@ After compilation, the PDF will show all macros in action. Adjust paths as neede
 
 \medskip
 \noindent\textbf{Author:} Christian Selzer \& Lukas Wittmann\\
-\textbf{Version:} 0.1 (2025/06/04)\\
+\textbf{Version:} 0.2 (2026/03/12)\\
 %------------------------------------------------------------------------------
 \section{Future Directions}
 \label{sec:future}
